@@ -32,5 +32,21 @@ public class Story {
     public void setImageId(int imageId) {
         this.imageId = imageId;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public String getBlurb() {
+        return blurb;
+    }
+
+    public int getImageId() {
+        return imageId;
+    }
 }
 
