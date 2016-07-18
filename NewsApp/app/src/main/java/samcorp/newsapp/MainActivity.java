@@ -8,12 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import com.facebook.FacebookSdk;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView mRecycler;
-    List<Story> mStoryList;
+    ArrayList<Story> mStoryList;
     MyAdapter adapter;
 
 

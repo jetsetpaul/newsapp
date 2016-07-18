@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by samwyz on 7/18/16.
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private List<Story> mStoryList;
+    ArrayList<Story> mStoryList;
     Context mContext;
 
     // Provide a reference to the views for each data item
@@ -25,9 +25,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<Story> mStoryList, Context context) {
+    public MyAdapter(ArrayList<Story> storyList, Context context) {
 
-        this.mStoryList = mStoryList;
+        this.mStoryList = storyList;
         this.mContext = context;
 
     }
