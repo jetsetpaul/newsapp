@@ -20,21 +20,25 @@ import java.util.ArrayList;
  */
 public class GuardianNews {
 
-    ArrayList<Story> mStoryList;
+    News news;
+    String query;
+    private final String GUARDIAN_URL =
+            "http://content.guardianapis.com/search?order-by=newest&show-elements=video&q="
+                    +query+"&limit=10&api-key=1caa0efc-fb6b-4b50-a2d9-20aa44d13a81";
+    private final String GUARDIAN_SECTIONS =
+            "http://content.guardianapis.com/search?order-by=newest&section="
+                    +query+"&limit=10&api-key=1caa0efc-fb6b-4b50-a2d9-20aa44d13a81";
+
 
 
     public GuardianNews() {
     }
 
+    public ArrayList<Story> guardianNews(String query){
 
-    public ArrayList<Story> makeGuardianNews(String query){
+        new DownloadUrlTask().execute(GUARDIAN_SECTIONS);
 
-        new DownloadUrlTask().execute("http://content.guardianapis.com/search?order-by=newest&show-elements=video&q="
-                +query+"&limit=10&api-key=1caa0efc-fb6b-4b50-a2d9-20aa44d13a81");
-        Log.d("GAT5", String.valueOf(mStoryList.size()));
-        return mStoryList;
     }
-
 
 
     private String downloadUrl(String url) throws IOException, JSONException {
@@ -75,19 +79,15 @@ public class GuardianNews {
         return stringBuilder.toString();
     }
 
-    private class DownloadUrlTask extends AsyncTask<String, Void, ArrayList<Story>> {
+    private class DownloadUrlTask extends AsyncTask<String, Void, Void> {
 
         @Override
-        protected ArrayList<Story> doInBackground(String... urls) {
-
-            ArrayList<Story> list;
+        protected Void doInBackground(String... urls) {
 
             try {
                 String json = downloadUrl(urls[0]);
                 Log.d("GAT", json);
-                list = parseGuardian(json);
-                Log.d("GAT6", String.valueOf(list.size()));
-                return list;
+                parseGuardian(json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
@@ -97,7 +97,7 @@ public class GuardianNews {
 
     public ArrayList<Story> parseGuardian(String jsonString){
 
-        ArrayList<Story> list = new ArrayList<>();
+        news = News.getInstance();
 
         try {
             JSONObject newsObject = new JSONObject(jsonString);
@@ -108,16 +108,14 @@ public class GuardianNews {
                 String headline = resultsArray.getJSONObject(i).getString("webTitle");
                 String category = resultsArray.getJSONObject(i).getString("sectionName");
                 String webLink = resultsArray.getJSONObject(i).getString("webUrl");
+                String source = "The Guardian";
                 Log.d("GAT3", category);
-                Story story = new Story(headline, webLink, R.mipmap.ic_launcher, category);
-                list.add(story);
+                Story story = new Story(headline, webLink, R.mipmap.ic_launcher, category, source);
+                news.addStory(story);
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        Log.d("GAT4", String.valueOf(list.size()));
-        return list;
     }
 }
