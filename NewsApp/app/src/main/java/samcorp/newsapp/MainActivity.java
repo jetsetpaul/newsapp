@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(Story story) {
                     Intent launchIntent = new Intent(MainActivity.this, DetailActivity.class);
                     launchIntent.putExtra(DetailActivity.EXTRA_STORY, "story");
-                    launchIntent.putExtra(DetailActivity.NEW_EXTRA, story);
-//                    startActivity(launchIntent);
+//                    launchIntent.putExtra(DetailActivity.NEW_EXTRA, story);
+                    startActivity(launchIntent);
             }
         };
 
