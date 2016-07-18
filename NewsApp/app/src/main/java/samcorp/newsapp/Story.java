@@ -8,13 +8,15 @@ public class Story {
     String link;
     String blurb;
     int imageId;
+    String source;
 
 
-    public Story(String title, String link, int imageId, String blurb) {
+    public Story(String title, String link, int imageId, String blurb, String source) {
         this.title = title;
         this.link = link;
         this.imageId = imageId;
         this.blurb = blurb;
+        this.source = source;
     }
 
     public void setTitle(String title) {
@@ -43,6 +45,10 @@ public class Story {
 
     public String getBlurb() {
         return blurb;
+    }
+
+    public String getSource() {
+        return source;
     }
 
     public int getImageId() {
