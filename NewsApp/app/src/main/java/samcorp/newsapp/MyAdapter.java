@@ -1,5 +1,7 @@
 package samcorp.newsapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,8 @@ import java.util.List;
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private List<News> newsList;
+    private List<Story> mStoryList;
+    Context mContext;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -21,9 +24,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<News> newsList) {
+    public MyAdapter(List<Story> mStoryList, Context context) {
 
-        this.newsList = newsList;
+        this.mStoryList = mStoryList;
+        this.mContext = context;
 
     }
 
@@ -43,16 +47,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mHeadline.setText(newsList.get(position).getmHeadline());
-        holder.mCategory.setText(newsList.get(position).getmCategory());
-        holder.mLink.setText(newsList.get(position).getmWebLink());
+        holder.mHeadline.setText(mStoryList.get(position).getTitle());
+        holder.mCategory.setText(mStoryList.get(position).getBlurb());
+        holder.mLink.setText(mStoryList.get(position).getLink());
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return newsList.size();
+        return mStoryList.size();
     }
 
 
@@ -70,13 +74,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             mCategory = (TextView) itemView.findViewById(R.id.category_text);
             mLink = (TextView) itemView.findViewById(R.id.link_text);
 
+            itemView.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View view) {
 
             int position = getAdapterPosition();
-            News news = newsList.get(position);
+            Story story = mStoryList.get(position);
+            Intent intent = new Intent(mContext, DetailActivity.class);
+            intent.putExtra("headline", story.getTitle());
+            intent.putExtra("blurb", story.getBlurb());
+            intent.putExtra("link", story.getLink());
+            mContext.startActivity(intent);
 
         }
     }
