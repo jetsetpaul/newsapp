@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         holder.mHeadline.setText(mStoryList.get(position).getTitle());
         holder.mCategory.setText(mStoryList.get(position).getBlurb());
+        holder.mImage.setImageResource(mStoryList.get(position).getImageId());
         holder.mLink.setText(mStoryList.get(position).getLink());
 
     }
@@ -66,6 +68,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public TextView mHeadline;
         public TextView mCategory;
         public TextView mLink;
+        public ImageView mImage;
 
         public ViewHolder(View itemView) {
 
@@ -73,6 +76,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             mHeadline = (TextView) itemView.findViewById(R.id.headline_text);
             mCategory = (TextView) itemView.findViewById(R.id.category_text);
             mLink = (TextView) itemView.findViewById(R.id.link_text);
+            mImage = (ImageView) itemView.findViewById(R.id.image);
 
             itemView.setOnClickListener(this);
 
@@ -87,6 +91,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             intent.putExtra("headline", story.getTitle());
             intent.putExtra("blurb", story.getBlurb());
             intent.putExtra("link", story.getLink());
+            intent.putExtra("image", story.getImageId());
             mContext.startActivity(intent);
 
         }
