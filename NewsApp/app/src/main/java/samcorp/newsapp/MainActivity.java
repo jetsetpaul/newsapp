@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 
@@ -16,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     MyAdapter mAdapter;
     News mNewsList;
     String query;
+    ListView mDrawerList;
+    ArrayAdapter<String> mStringAdapter;
 
     private final String GUARDIAN_URL =
             "http://content.guardianapis.com/search?order-by=newest&show-elements=video&q="
@@ -30,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         mNewsList = News.getInstance();
         query = "politics";
+        mDrawerList = (ListView)findViewById(R.id.navList);
+        addDrawerItems();
 
         GuardianNews.NewsListener newsListener = new GuardianNews.NewsListener() {
             @Override
@@ -55,8 +64,22 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         mRecycler.setLayoutManager(layoutManager);
 
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "clicked " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
 
     }
 
+    private void addDrawerItems() {
+        String[] osArray = { "U.S. News", "World News", "Opinion", "Sports", "Tech", "Arts" };
+        mStringAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        mDrawerList.setAdapter(mStringAdapter);
+    }
 
 }
