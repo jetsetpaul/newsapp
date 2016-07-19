@@ -22,12 +22,7 @@ public class MainActivity extends AppCompatActivity {
     ListView mDrawerList;
     CategoryListAdapter listAdapter;
     List<NewsCategory> mCategoryList;
-<<<<<<< HEAD
-=======
     GuardianNews.NewsListener newsListener;
->>>>>>> sam-devbranch
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,23 +31,16 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         mNewsList = News.getInstance();
-<<<<<<< HEAD
+
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
 
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(MainActivity.this, "Clicked " + mCategoryList.get(i), Toast.LENGTH_SHORT).show();
-            }
-        });
-
         mRecycler = (RecyclerView) findViewById(R.id.recycler);
-=======
+
         mRecycler = (RecyclerView) findViewById(R.id.recycler);
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
->>>>>>> sam-devbranch
+
 
         newsListener = new GuardianNews.NewsListener() {
             @Override
@@ -64,10 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-<<<<<<< HEAD
-=======
 
->>>>>>> sam-devbranch
         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_FILM);
         layoutManager = new LinearLayoutManager(this);
         mRecycler.setLayoutManager(layoutManager);
