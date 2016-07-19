@@ -15,21 +15,16 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     MyAdapter mAdapter;
     News mNewsList;
-    String query;
-
-    private final String GUARDIAN_URL =
-            "http://content.guardianapis.com/search?order-by=newest&show-elements=video&q="
-                    + query + "&limit=10&api-key=1caa0efc-fb6b-4b50-a2d9-20aa44d13a81";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FacebookSdk.sdkInitialize(getApplicationContext());
+
         mNewsList = News.getInstance();
-        query = "politics";
+
+        mRecycler = (RecyclerView) findViewById(R.id.recycler);
 
         GuardianNews.NewsListener newsListener = new GuardianNews.NewsListener() {
             @Override
@@ -42,15 +37,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        new GuardianNews.DownloadUrlTask(newsListener).execute(GUARDIAN_URL);
 
-
-
-        mRecycler = (RecyclerView) findViewById(R.id.recycler);
-
-
-
-
+        new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_FILM);
 
         layoutManager = new LinearLayoutManager(this);
         mRecycler.setLayoutManager(layoutManager);

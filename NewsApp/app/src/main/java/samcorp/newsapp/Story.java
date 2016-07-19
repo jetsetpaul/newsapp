@@ -9,16 +9,14 @@ public class Story implements Serializable{
     String title;
     String link;
     String blurb;
-    int imageId;
-    String source;
+    String image;
 
 
-    public Story(String title, String link, int imageId, String blurb, String source) {
+    public Story(String title, String link, String blurb, String image) {
         this.title = title;
         this.link = link;
-        this.imageId = imageId;
         this.blurb = blurb;
-        this.source = source;
+        this.image = image;
     }
 
     public void setTitle(String title) {
@@ -33,10 +31,6 @@ public class Story implements Serializable{
         this.blurb = blurb;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -49,12 +43,9 @@ public class Story implements Serializable{
         return blurb;
     }
 
-    public String getSource() {
-        return source;
+    public String getImage() {
+        return image;
     }
 
-    public int getImageId() {
-        return imageId;
-    }
 }
 
