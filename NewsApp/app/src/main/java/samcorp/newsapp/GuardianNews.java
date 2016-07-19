@@ -106,8 +106,9 @@ public class GuardianNews {
                     String category = resultsArray.getJSONObject(i).getString("sectionName");
                     String webLink = resultsArray.getJSONObject(i).getString("webUrl");
                     String imageUrl = resultsArray.getJSONObject(i).getJSONObject("fields").getString("thumbnail");
-                    Log.d("GAT5", imageUrl);
-                    Story story = new Story(headline, webLink, category, imageUrl);
+                    String blurb = resultsArray.getJSONObject(i).getJSONObject("fields").getString("trailText");
+                    Log.d("GAT5", blurb);
+                    Story story = new Story(headline, webLink, category, imageUrl, blurb);
                     list.add(story);
                     Log.d("GAT4", String.valueOf(list.size()));
                 }

@@ -10,13 +10,15 @@ public class Story implements Serializable{
     String link;
     String blurb;
     String image;
+    String category;
 
 
-    public Story(String title, String link, String blurb, String image) {
+    public Story(String title, String link, String category, String image, String blurb) {
         this.title = title;
         this.link = link;
-        this.blurb = blurb;
+        this.category = category;
         this.image = image;
+        this.blurb = blurb;
     }
 
     public void setTitle(String title) {
@@ -45,6 +47,12 @@ public class Story implements Serializable{
 
     public String getImage() {
         return image;
+    }
+
+    public String getCategory(){ return category; }
+
+    public void setCategory(String category){
+        this.category = category;
     }
 
 }
