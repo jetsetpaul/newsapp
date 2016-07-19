@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 /**
@@ -51,7 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         holder.mHeadline.setText(mStoryList.get(position).getTitle());
         holder.mCategory.setText(mStoryList.get(position).getBlurb());
-        holder.mImage.setImageResource(mStoryList.get(position).getImageId());
+        Picasso.with(mContext).load(mStoryList.get(position).getImage()).into(holder.mImage);
         holder.mLink.setText(mStoryList.get(position).getLink());
 
     }

@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -19,13 +18,11 @@ public class DetailFragment extends Fragment {
 
         return inflater.inflate(R.layout.fragment_detail, container, false);
     }
-    public void setStoryText(String title, String blurb, int imageId, String link){
+    public void setStoryText(String title, String blurb){
         //access our textView
         TextView titleText = (TextView) getView().findViewById(R.id.storyTitle);
         titleText.setText(title);
         TextView blurbText = (TextView) getView().findViewById(R.id.storyBlurb);
         blurbText.setText(blurb);
-        ImageView itemImage = (ImageView) getView().findViewById(R.id.fragmentImage);
-        itemImage.setImageResource(imageId);
     }
 }

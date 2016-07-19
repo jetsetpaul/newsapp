@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FacebookSdk.sdkInitialize(getApplicationContext());
+
         mNewsList = News.getInstance();
         query = "politics";
         mDrawerList = (ListView)findViewById(R.id.navList);
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Clicked " + mCategoryList.get(i), Toast.LENGTH_SHORT).show();
             }
         });
+
+        mRecycler = (RecyclerView) findViewById(R.id.recycler);
 
         GuardianNews.NewsListener newsListener = new GuardianNews.NewsListener() {
             @Override
@@ -58,15 +61,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        new GuardianNews.DownloadUrlTask(newsListener).execute(GUARDIAN_URL);
 
-
-
-        mRecycler = (RecyclerView) findViewById(R.id.recycler);
-
-
-
-
+        new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_FILM);
 
         layoutManager = new LinearLayoutManager(this);
         mRecycler.setLayoutManager(layoutManager);
