@@ -41,10 +41,6 @@
 
         <fragement android:name=".DetailFragment" />
 
-        <activity
-            android:name=".DrawerActivity"
-            android:label="@string/title_activity_drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

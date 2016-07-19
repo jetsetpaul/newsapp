@@ -27,7 +27,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/linkButton"/>
+            android:id="@+id/linkButton"
+            />
         <com.facebook.share.widget.ShareButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
