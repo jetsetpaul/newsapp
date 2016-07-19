@@ -20,14 +20,9 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     MyAdapter mAdapter;
     News mNewsList;
-    String query;
     ListView mDrawerList;
     CategoryListAdapter listAdapter;
     List<NewsCategory> mCategoryList;
-
-    private final String GUARDIAN_URL =
-            "http://content.guardianapis.com/search?order-by=newest&show-elements=video&q="
-                    + query + "&limit=10&api-key=1caa0efc-fb6b-4b50-a2d9-20aa44d13a81";
 
 
 
@@ -38,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         mNewsList = News.getInstance();
-        query = "politics";
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
+
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -60,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-
         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_FILM);
 
         layoutManager = new LinearLayoutManager(this);
