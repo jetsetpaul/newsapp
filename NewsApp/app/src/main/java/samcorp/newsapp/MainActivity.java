@@ -6,13 +6,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
     News mNewsList;
     String query;
     ListView mDrawerList;
-    ArrayAdapter<String> mStringAdapter;
+    CategoryListAdapter listAdapter;
+    List<NewsCategory> mCategoryList;
 
     private final String GUARDIAN_URL =
             "http://content.guardianapis.com/search?order-by=newest&show-elements=video&q="
@@ -39,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
         query = "politics";
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(MainActivity.this, "Clicked " + mCategoryList.get(i), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         GuardianNews.NewsListener newsListener = new GuardianNews.NewsListener() {
             @Override
@@ -77,9 +84,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "U.S. News", "World News", "Opinion", "Sports", "Tech", "Arts" };
-        mStringAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
-        mDrawerList.setAdapter(mStringAdapter);
+        mCategoryList = new ArrayList<NewsCategory>();
+        mCategoryList.add(new NewsCategory("U.S. News", R.drawable.usa));
+        mCategoryList.add(new NewsCategory("World News", R.drawable.ic_action_globe));
+        mCategoryList.add(new NewsCategory("Opinion", R.drawable.ic_action_monolog));
+        mCategoryList.add(new NewsCategory("Sports", R.drawable.football));
+        mCategoryList.add(new NewsCategory("Tech", R.drawable.ic_menu_share));
+        mCategoryList.add(new NewsCategory("Arts", R.drawable.ic_color_lens));
+//;
+        listAdapter = new CategoryListAdapter(MainActivity.this, mCategoryList);
+        mDrawerList.setAdapter(listAdapter);
     }
+
+
 
 }
