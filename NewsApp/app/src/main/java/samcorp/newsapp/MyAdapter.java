@@ -52,9 +52,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mHeadline.setText(mStoryList.get(position).getTitle());
-        holder.mCategory.setText(mStoryList.get(position).getBlurb());
+        holder.mBlurb.setText(mStoryList.get(position).getBlurb());
         Picasso.with(mContext).load(mStoryList.get(position).getImage()).into(holder.mImage);
-        holder.mLink.setText(mStoryList.get(position).getLink());
 
     }
 
@@ -69,16 +68,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView mHeadline;
-        public TextView mCategory;
-        public TextView mLink;
+        public TextView mBlurb;
         public ImageView mImage;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
             mHeadline = (TextView) itemView.findViewById(R.id.headline_text);
-            mCategory = (TextView) itemView.findViewById(R.id.category_text);
-            mLink = (TextView) itemView.findViewById(R.id.link_text);
+            mBlurb = (TextView) itemView.findViewById(R.id.blurb_text);
             mImage = (ImageView) itemView.findViewById(R.id.image);
 
             itemView.setOnClickListener(this);
