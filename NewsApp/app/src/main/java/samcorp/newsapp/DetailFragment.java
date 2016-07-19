@@ -19,12 +19,14 @@ public class DetailFragment extends Fragment {
 
         return inflater.inflate(R.layout.fragment_detail, container, false);
     }
-    public void setStoryText(String title, String blurb, int imageId){
+    public void setStoryText(String title, String blurb, int imageId, String link){
         //access our textView
         TextView titleText = (TextView) getView().findViewById(R.id.storyTitle);
         titleText.setText(title);
         TextView blurbText = (TextView) getView().findViewById(R.id.storyBlurb);
         blurbText.setText(blurb);
+        TextView linkText = (TextView) getView().findViewById(R.id.link_text);
+        linkText.setText(link);
         ImageView itemImage = (ImageView) getView().findViewById(R.id.fragmentImage);
         itemImage.setImageResource(imageId);
     }

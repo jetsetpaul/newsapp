@@ -12,8 +12,15 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView mRecycler;
-    ArrayList<Story> mStoryList;
-    MyAdapter adapter;
+    LinearLayoutManager layoutManager;
+    MyAdapter mAdapter;
+    News mNewsList;
+    String query;
+
+    private final String GUARDIAN_URL =
+            "http://content.guardianapis.com/search?order-by=newest&show-elements=video&q="
+                    + query + "&limit=10&api-key=1caa0efc-fb6b-4b50-a2d9-20aa44d13a81";
+
 
 
     @Override
@@ -21,26 +28,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        mNewsList = News.getInstance();
+        query = "politics";
+
+        GuardianNews.NewsListener newsListener = new GuardianNews.NewsListener() {
+            @Override
+            public void onNewsLoaded(ArrayList<Story> stories) {
+                for(Story story:stories){
+                    mNewsList.addStory(story);
+                    mAdapter = new MyAdapter(mNewsList.getStories(), MainActivity.this);
+                    mRecycler.setAdapter(mAdapter);
+                }
+            }
+        };
+
+        new GuardianNews.DownloadUrlTask(newsListener).execute(GUARDIAN_URL);
+
+
 
         mRecycler = (RecyclerView) findViewById(R.id.recycler);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        mRecycler.setLayoutManager(llm);
 
-        initializeData();
-        intializeAdapter();
 
-    }
 
-    private void initializeData() {
-        mStoryList = new ArrayList<>();
-        mStoryList.add(new Story("Stuff happened somewhere", "http://www.google.com", R.drawable.com_facebook_profile_picture_blank_square, "blurblurblurblublurblburlblurb"));
-        mStoryList.add(new Story("More stuff happened somewhere else", "http://www.chorus.fm", R.drawable.com_facebook_profile_picture_blank_square,"blurbyblurblurblurblurbylblub"));
-        mStoryList.add(new Story("Not really much to read here", "http://www.reddit.com", R.drawable.com_facebook_profile_picture_blank_square,"BLURB! Blurblurb!"));
-    }
 
-    private void intializeAdapter() {
-        adapter = new MyAdapter(mStoryList, this);
-        mRecycler.setAdapter(adapter);
+
+        layoutManager = new LinearLayoutManager(this);
+        mRecycler.setLayoutManager(layoutManager);
+
+
     }
 
 

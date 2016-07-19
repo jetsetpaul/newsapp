@@ -1,9 +1,11 @@
 package samcorp.newsapp;
 
+import java.io.Serializable;
+
 /**
  * Created by pauljoiner on 7/16/16.
  */
-public class Story {
+public class Story implements Serializable{
     String title;
     String link;
     String blurb;

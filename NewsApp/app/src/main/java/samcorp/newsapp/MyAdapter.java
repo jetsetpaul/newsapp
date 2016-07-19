@@ -2,6 +2,7 @@ package samcorp.newsapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,12 +87,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public void onClick(View view) {
 
             int position = getAdapterPosition();
+            Bundle bundle = new Bundle();
             Story story = mStoryList.get(position);
             Intent intent = new Intent(mContext, DetailActivity.class);
-            intent.putExtra("headline", story.getTitle());
-            intent.putExtra("blurb", story.getBlurb());
-            intent.putExtra("link", story.getLink());
-            intent.putExtra("image", story.getImageId());
+            bundle.putSerializable("story", story);
+            intent.putExtras(bundle);
             mContext.startActivity(intent);
 
         }
