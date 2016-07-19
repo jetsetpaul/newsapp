@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     MyAdapter mAdapter;
     News mNewsList;
+    String query;
     ListView mDrawerList;
     CategoryListAdapter listAdapter;
     List<NewsCategory> mCategoryList;
@@ -53,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+
         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_FILM);
+
         layoutManager = new LinearLayoutManager(this);
         mRecycler.setLayoutManager(layoutManager);
 

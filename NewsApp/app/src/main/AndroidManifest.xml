@@ -27,6 +27,9 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="samcorp.newsapp.NewsContentProvider"
+            android:name=".NewsContentProvider"></provider>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -38,6 +41,15 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".DetailActivity" />
+        <service
+            android:name="samcorp.newsapp.PlaceholderAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
 
         <fragement android:name=".DetailFragment" />
 

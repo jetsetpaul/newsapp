@@ -25,7 +25,7 @@ public class GuardianNews {
     }
 
 
-    private static String downloadUrl(String url) throws IOException, JSONException {
+    public static String downloadUrl(String url) throws IOException, JSONException {
 
         InputStream inputStream = null;
 
@@ -49,7 +49,7 @@ public class GuardianNews {
         }
     }
 
-    private static String readInput(InputStream inputStream) throws IOException {
+    public static String readInput(InputStream inputStream) throws IOException {
 
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
