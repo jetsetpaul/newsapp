@@ -25,8 +25,6 @@ public class DetailFragment extends Fragment {
         titleText.setText(title);
         TextView blurbText = (TextView) getView().findViewById(R.id.storyBlurb);
         blurbText.setText(blurb);
-        TextView linkText = (TextView) getView().findViewById(R.id.link_text);
-        linkText.setText(link);
         ImageView itemImage = (ImageView) getView().findViewById(R.id.fragmentImage);
         itemImage.setImageResource(imageId);
     }
