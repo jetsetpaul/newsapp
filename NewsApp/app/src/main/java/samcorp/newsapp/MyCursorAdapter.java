@@ -1,6 +1,5 @@
 package samcorp.newsapp;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 /**
  * Created by samwyz on 7/19/16.
  */
@@ -22,15 +19,12 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapter.ViewHo
 
     Context context;
     Cursor cursor;
-    ArrayList<Story> storyList;
-    ContentResolver mContentResolver;
 
 
-    public MyCursorAdapter(Context context, Cursor cursor/*, ArrayList<Story> list*/){
+    public MyCursorAdapter(Context context, Cursor cursor){
 
         this.context = context;
         this.cursor = cursor;
-        //this.storyList = list;
     }
 
 
@@ -66,14 +60,14 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapter.ViewHo
     @Override
     public void change(Cursor cursor) {
 
-
         this.cursor = context.getContentResolver().query(NewsContentProvider.CONTENT_URI,
                 null, null, null, null);
+        notifyDataSetChanged();
 
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/{
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
 
 
@@ -88,21 +82,6 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapter.ViewHo
             mBlurb = (TextView) itemView.findViewById(R.id.blurb_text);
             mImage = (ImageView) itemView.findViewById(R.id.image);
 
-            //itemView.setOnClickListener(this);
-
         }
-
-//        @Override
-//        public void onClick(View view) {
-//
-//            int position = getAdapterPosition();
-//            Bundle bundle = new Bundle();
-//            Story story = storyList.get(position);
-//            Intent intent = new Intent(context, DetailActivity.class);
-//            bundle.putSerializable("story", story);
-//            intent.putExtras(bundle);
-//            context.startActivity(intent);
-//
-//        }
     }
 }

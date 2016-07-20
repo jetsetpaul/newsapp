@@ -44,4 +44,25 @@ public class Constants {
     public static final String GUARDIAN_TECH =
             "http://content.guardianapis.com/search?order-by=newest&section=technology&limit=10&format=json&show-fields=thumbnail%2CtrailText&api-key=1caa0efc-fb6b-4b50-a2d9-20aa44d13a81";
 
+    public static final String NYT_US =
+            "https://api.nytimes.com/svc/topstories/v2/national.json?limit=10&api-key=7ee973aaf5ba44d392b221269981c34b";
+
+    public static final String NYT_WORLD =
+            "https://api.nytimes.com/svc/topstories/v2/world.json?limit=10&api-key=7ee973aaf5ba44d392b221269981c34b";
+
+    public static final String NYT_SPORTS =
+            "https://api.nytimes.com/svc/topstories/v2/sports.json?limit=10&api-key=7ee973aaf5ba44d392b221269981c34b";
+
+    public static final String NYT_OPINION =
+            "https://api.nytimes.com/svc/topstories/v2/opinion.json?limit=10&api-key=7ee973aaf5ba44d392b221269981c34b";
+
+    public static final String NYT_TECH =
+            "https://api.nytimes.com/svc/topstories/v2/technology.json?limit=10&api-key=7ee973aaf5ba44d392b221269981c34b";
+
+    public static final String NYT_MOVIES =
+            "https://api.nytimes.com/svc/topstories/v2/movies.json?limit=10&api-key=7ee973aaf5ba44d392b221269981c34b";
+
+    public static final String NYT_TRAVEL =
+            "https://api.nytimes.com/svc/topstories/v2/travel.json?limit=10&api-key=7ee973aaf5ba44d392b221269981c34b";
+
 }

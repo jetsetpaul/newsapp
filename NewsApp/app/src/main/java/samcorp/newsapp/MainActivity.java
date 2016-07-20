@@ -3,10 +3,10 @@ package samcorp.newsapp;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FacebookSdk.sdkInitialize(getApplicationContext());
-        mAccount = createSyncAccount(this);
+
         mNewsList = News.getInstance();
         mDrawerList = (ListView)findViewById(R.id.navList);
         mRecycler = (RecyclerView) findViewById(R.id.recycler);
@@ -51,114 +51,69 @@ public class MainActivity extends AppCompatActivity {
         mRecycler.setLayoutManager(layoutManager);
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
-
         mResolver = getContentResolver();
 
 
+        mAccount = createSyncAccount(MainActivity.this);
 
-        newsListener = new GuardianNews.NewsListener() {
-            @Override
-            public void onNewsLoaded(ArrayList<Story> stories) {
-                ContentValues contentValues = new ContentValues();
-                int i = 0;
-                dbHelper = new NewsDBHelper(MainActivity.this, null, null, 1);
-                dbHelper.deleteAllArticles();
+        Bundle settingsBundle = new Bundle();
+        settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
 
-                for(Story story:stories){
-                    contentValues.put(NewsDBHelper.COLUMN_ID, i);
-                    contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
-                    contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
-                    contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
-                    contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
-                    mResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
-                    i++;
-                }
+        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
+        ContentResolver.addPeriodicSync(mAccount, AUTHORITY, Bundle.EMPTY, 10800);
 
-                Cursor cursor = mResolver.query(NewsContentProvider.CONTENT_URI, null, null, null, null);
-                cursor.moveToFirst();
-                mCursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
-                mRecycler.setAdapter(mCursorAdapter);
-            }
-        };
+        Cursor cursor = mResolver.query(NewsContentProvider.CONTENT_URI, null, null, null, null);
+        cursor.moveToFirst();
+        mCursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
+        mRecycler.setAdapter(mCursorAdapter);
 
-        new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_FILM);
+        mResolver.registerContentObserver(NewsContentProvider.CONTENT_URI, true,
+                new MyContentObserver(new Handler(), mCursorAdapter, MainActivity.this));
 
 
 
-
-//        Bundle settingsBundle = new Bundle();
-//        settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
-//        settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-//
-//        mResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
-//
-//        Cursor cursor = getContentResolver().query(NewsContentProvider.CONTENT_URI, null, null, null, null);
-//        mCursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
-//        mRecycler.setAdapter(mCursorAdapter);
-//
-//        mResolver.registerContentObserver(NewsContentProvider.CONTENT_URI, true,
-//                new MyContentObserver(new Handler(), mCursorAdapter, MainActivity.this));
-
-
-
-
-
-
-
-
-
-
-//        layoutManager = new LinearLayoutManager(this);
-//        mRecycler.setLayoutManager(layoutManager);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i){
                     case 0:
-                        mNewsList.clearStories();
                         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_US);
                         layoutManager = new LinearLayoutManager(MainActivity.this);
                         mRecycler.setLayoutManager(layoutManager);
                         break;
                     case 1:
-                        mNewsList.clearStories();
                         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_WORLD);
                         layoutManager = new LinearLayoutManager(MainActivity.this);
                         mRecycler.setLayoutManager(layoutManager);
                         break;
                     case 2:
-                        mNewsList.clearStories();
                         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_OPINION);
                         layoutManager = new LinearLayoutManager(MainActivity.this);
                         mRecycler.setLayoutManager(layoutManager);
                         break;
                     case 3:
-                        mNewsList.clearStories();
                         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_POLITICS);
                         layoutManager = new LinearLayoutManager(MainActivity.this);
                         mRecycler.setLayoutManager(layoutManager);
                         break;
                     case 4:
-                        mNewsList.clearStories();
                         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_SPORTS);
                         layoutManager = new LinearLayoutManager(MainActivity.this);
                         mRecycler.setLayoutManager(layoutManager);
                         break;
                     case 5:
-                        mNewsList.clearStories();
                         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_TECH);
                         layoutManager = new LinearLayoutManager(MainActivity.this);
                         mRecycler.setLayoutManager(layoutManager);
                         break;
                     case 6:
-                        mNewsList.clearStories();
                         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_TECH);
                         layoutManager = new LinearLayoutManager(MainActivity.this);
                         mRecycler.setLayoutManager(layoutManager);
                         break;
                     case 7:
-                        mNewsList.clearStories();
                         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_CULTURE);
                         layoutManager = new LinearLayoutManager(MainActivity.this);
                         mRecycler.setLayoutManager(layoutManager);
@@ -169,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    //TODO: arts returning same as tech
 
     private void addDrawerItems() {
         mCategoryList = new ArrayList<>();
@@ -210,4 +167,20 @@ public class MainActivity extends AppCompatActivity {
         }
         return newAccount;
     }
+
+//    public class WrapContentLinearLayoutManager extends LinearLayoutManager {
+//
+//
+//        public WrapContentLinearLayoutManager(Context context) {
+//            super(context);
+//        }
+//        @Override
+//        public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+//            try {
+//                super.onLayoutChildren(recycler, state);
+//            } catch (IndexOutOfBoundsException e) {
+//                Log.e("probe", "meet a IOOBE in RecyclerView");
+//            }
+//        }
+//    }
 }

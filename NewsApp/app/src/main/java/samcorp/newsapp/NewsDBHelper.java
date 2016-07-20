@@ -28,7 +28,7 @@ public class NewsDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_ARTICLES_TABLE = "CREATE TABLE " +
                 TABLE_ARTICLES + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_TITLE
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_TITLE
                 + " TEXT," + COLUMN_LINK + " TEXT," + COLUMN_BLURB
                 + " TEXT," + COLUMN_IMAGE + " INTEGER)";
         db.execSQL(CREATE_ARTICLES_TABLE);
