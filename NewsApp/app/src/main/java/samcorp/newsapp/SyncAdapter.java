@@ -41,7 +41,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     }
 
-    public SyncAdapter(Context context, boolean autoInitialize, boolean allowParallelSyncs){
+    public SyncAdapter(Context context, boolean autoInitialize, boolean allowParallelSyncs) {
         super(context, autoInitialize, allowParallelSyncs);
 
         mContentResolver = context.getContentResolver();
@@ -51,7 +51,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
 
-        mContentResolver.delete(NewsContentProvider.CONTENT_URI,null,null);
+        mContentResolver.delete(NewsContentProvider.CONTENT_URI, null, null);
         String data = "";
 
         try {
@@ -65,17 +65,40 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             e.printStackTrace();
         }
 
-        list = parseGuardian(data);
-        for (Story story:list){
-            int i = 0;
-            contentValues.put(NewsDBHelper.COLUMN_ID, i);
-            contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
-            contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
-            contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
-            contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
-            mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
-            i++;
+        contentValues = new ContentValues();
 
+        list = parseGuardian(data);
+        if(list != null) {
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
+        }
+
+        try {
+            URL url = new URL(Constants.NYT_US);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+            Log.d("GAT", data);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        contentValues = new ContentValues();
+        if (list != null) {
+            list = parseNYT(data);
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
         }
 
 
@@ -88,7 +111,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
         String data = null;
 
-        while ((data = reader.readLine()) != null){
+        while ((data = reader.readLine()) != null) {
             builder.append(data);
         }
 
@@ -122,6 +145,37 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    public ArrayList<Story> parseNYT(String jsonString) {
+        ArrayList<Story> list = new ArrayList<>();
+        try {
+            JSONObject newsObject = new JSONObject(jsonString);
+            JSONArray resultsArray = newsObject.getJSONArray("results");
+            for (int i = 0; i < resultsArray.length(); i++) {
+                String imageUrl = "";
+                String headline = resultsArray.getJSONObject(i).getString("title");
+                String category = resultsArray.getJSONObject(i).getString("section");
+                String webLink = resultsArray.getJSONObject(i).getString("url");
+                JSONArray mediaArray = resultsArray.getJSONObject(i).getJSONArray("multimedia");
+                Log.d("NYT", "Image array size: " + mediaArray.length());
+                if (mediaArray.length() < 5) {
+                    imageUrl = "http://24.media.tumblr.com/tumblr_m2igzcMtyU1qze0hyo1_500.jpg";
+                } else {
+                    imageUrl = mediaArray.getJSONObject(4).getString("url");
+                }
+                Log.d("NYT", "Image url: " + imageUrl);
+                String blurb = resultsArray.getJSONObject(i).getString("abstract");
+                Log.d("GAT5", blurb);
+                Story story = new Story(headline, webLink, category, imageUrl, blurb);
+                list.add(story);
+                Log.d("GAT4", String.valueOf(list.size()));
+            }  return list;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

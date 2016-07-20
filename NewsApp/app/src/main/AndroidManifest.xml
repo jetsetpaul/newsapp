@@ -42,6 +42,15 @@
 
         <activity android:name=".DetailActivity" />
         <service
+            android:name="samcorp.newsapp.MySyncService">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service>
+        <service
             android:name="samcorp.newsapp.PlaceholderAuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
