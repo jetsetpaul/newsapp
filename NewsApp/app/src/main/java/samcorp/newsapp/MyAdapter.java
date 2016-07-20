@@ -53,7 +53,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         holder.mHeadline.setText(mStoryList.get(position).getTitle());
         holder.mBlurb.setText(mStoryList.get(position).getBlurb());
-        Picasso.with(mContext).load(mStoryList.get(position).getImage()).into(holder.mImage);
+        Picasso.with(mContext)
+                .load(mStoryList.get(position).getImage())
+                .resize(1000, 650)
+                .centerInside()
+                .into(holder.mImage);
 
     }
 
