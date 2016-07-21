@@ -1,7 +1,9 @@
 package samcorp.newsapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -48,6 +52,11 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapter.ViewHo
                 .resize(1000, 650)
                 .centerInside()
                 .into(holder.mImage);
+        ShareLinkContent content = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse(cursor.getString(cursor.getColumnIndex(NewsDBHelper.COLUMN_LINK))))
+                .build();
+       holder.shareButton.setShareContent(content);
+
 
     }
 
@@ -67,10 +76,10 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapter.ViewHo
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
 
-
+        public ShareButton shareButton;
         public TextView mHeadline;
         public TextView mBlurb;
         public ImageView mImage;
@@ -78,10 +87,18 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapter.ViewHo
         public ViewHolder(View itemView) {
 
             super(itemView);
+            shareButton = (ShareButton) itemView.findViewById(R.id.fb_share_button);
             mHeadline = (TextView) itemView.findViewById(R.id.headline_text);
             mBlurb = (TextView) itemView.findViewById(R.id.blurb_text);
             mImage = (ImageView) itemView.findViewById(R.id.image);
 
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent i = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(cursor.getString(cursor.getColumnIndex(NewsDBHelper.COLUMN_LINK))));
+            context.startActivity(i);
         }
     }
 }
