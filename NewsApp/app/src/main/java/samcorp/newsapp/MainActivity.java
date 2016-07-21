@@ -4,6 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String AUTHORITY = "samcorp.newsapp.NewsContentProvider";
     public static final String ACCOUNT_TYPE = "example.com";
     public static final String ACCOUNT = "default_account";
+    public static final String PREFS_NAME = "USER_PREFS";
 
 
     RecyclerView mRecycler;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     ContentResolver mResolver;
     Account mAccount;
     NewsDBHelper dbHelper;
+    SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         mAccount = createSyncAccount(MainActivity.this);
 
         ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
-        ContentResolver.addPeriodicSync(mAccount, AUTHORITY, Bundle.EMPTY, 2000000000);
+        ContentResolver.addPeriodicSync(mAccount, AUTHORITY, Bundle.EMPTY, 5400);
 
         Cursor cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
                 null, null, null);
@@ -70,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         mResolver.registerContentObserver(NewsContentProvider.CONTENT_URI, true,
                 new MyContentObserver(new Handler(), mCursorAdapter, MainActivity.this));
-
-
 
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

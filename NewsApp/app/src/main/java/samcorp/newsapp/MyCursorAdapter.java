@@ -84,9 +84,12 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapter.ViewHo
         public TextView mBlurb;
         public ImageView mImage;
 
+
+
         public ViewHolder(View itemView) {
 
             super(itemView);
+            itemView.setOnClickListener(this);
             shareButton = (ShareButton) itemView.findViewById(R.id.fb_share_button);
             mHeadline = (TextView) itemView.findViewById(R.id.headline_text);
             mBlurb = (TextView) itemView.findViewById(R.id.blurb_text);
