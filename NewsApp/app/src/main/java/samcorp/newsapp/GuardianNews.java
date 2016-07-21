@@ -118,7 +118,7 @@ public class GuardianNews {
                 e.printStackTrace();
             }
 
-            return null;
+            return list;
         }
 
 

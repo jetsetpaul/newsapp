@@ -29,8 +29,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     ContentResolver mContentResolver;
     ArrayList<Story> list;
-    News newsList;
-    NewsDBHelper dbHelper;
     ContentValues contentValues;
 
 
@@ -66,14 +64,15 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         contentValues = new ContentValues();
-
         list = parseGuardian(data);
+
         if(list != null) {
             for (Story story : list) {
                 contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
                 contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
                 contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
                 contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
                 mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
             }
         }
@@ -90,13 +89,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         contentValues = new ContentValues();
+        list = parseNYT(data);
         if (list != null) {
-            list = parseNYT(data);
             for (Story story : list) {
                 contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
                 contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
                 contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
                 contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
                 mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
             }
         }
@@ -138,6 +138,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 Story story = new Story(headline, webLink, category, imageUrl, blurb);
                 list.add(story);
                 Log.d("GAT4", String.valueOf(list.size()));
+
             }
             return list;
 

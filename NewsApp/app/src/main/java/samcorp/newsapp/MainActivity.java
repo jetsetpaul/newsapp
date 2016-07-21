@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String AUTHORITY = "samcorp.newsapp.NewsContentProvider";
     public static final String ACCOUNT_TYPE = "example.com";
     public static final String ACCOUNT = "default_account";
+
 
     RecyclerView mRecycler;
     LinearLayoutManager layoutManager;
@@ -52,18 +54,16 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
         mResolver = getContentResolver();
+        dbHelper = new NewsDBHelper(MainActivity.this, null, null, 1);
 
 
         mAccount = createSyncAccount(MainActivity.this);
 
-        Bundle settingsBundle = new Bundle();
-        settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
-        settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-
         ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
         ContentResolver.addPeriodicSync(mAccount, AUTHORITY, Bundle.EMPTY, 10800);
 
-        Cursor cursor = mResolver.query(NewsContentProvider.CONTENT_URI, null, null, null, null);
+        Cursor cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
+                null, null, null);
         cursor.moveToFirst();
         mCursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
         mRecycler.setAdapter(mCursorAdapter);
@@ -79,9 +79,14 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i){
                     case 0:
-                        new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_US);
-                        layoutManager = new LinearLayoutManager(MainActivity.this);
-                        mRecycler.setLayoutManager(layoutManager);
+                        Cursor cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
+                                NewsDBHelper.COLUMN_CATEGORY+ "=?", new String[]{"Politics"}, null);
+                        MyCursorAdapter cursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
+                        Log.d("GAT", String.valueOf(cursor.getCount()));
+                        cursorAdapter.notifyDataSetChanged();
+                        cursor.moveToPosition(i);
+                        mRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        mRecycler.setAdapter(cursorAdapter);
                         break;
                     case 1:
                         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_WORLD);
@@ -109,11 +114,6 @@ public class MainActivity extends AppCompatActivity {
                         mRecycler.setLayoutManager(layoutManager);
                         break;
                     case 6:
-                        new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_TECH);
-                        layoutManager = new LinearLayoutManager(MainActivity.this);
-                        mRecycler.setLayoutManager(layoutManager);
-                        break;
-                    case 7:
                         new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_CULTURE);
                         layoutManager = new LinearLayoutManager(MainActivity.this);
                         mRecycler.setLayoutManager(layoutManager);
@@ -167,20 +167,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return newAccount;
     }
-
-//    public class WrapContentLinearLayoutManager extends LinearLayoutManager {
-//
-//
-//        public WrapContentLinearLayoutManager(Context context) {
-//            super(context);
-//        }
-//        @Override
-//        public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-//            try {
-//                super.onLayoutChildren(recycler, state);
-//            } catch (IndexOutOfBoundsException e) {
-//                Log.e("probe", "meet a IOOBE in RecyclerView");
-//            }
-//        }
-//    }
 }
