@@ -10,7 +10,8 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:weightSum="1">
 
     <ImageView
         android:layout_width="match_parent"
@@ -29,11 +30,15 @@
         android:id="@+id/blurb_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp"
+        android:layout_marginBottom="20dp"/>
+
     <com.facebook.share.widget.ShareButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fb_share_button"/>
+        android:id="@+id/fb_share_button"
+        android:layout_marginRight="8dp"
+        android:layout_gravity="right" />
 
 </LinearLayout>
 
