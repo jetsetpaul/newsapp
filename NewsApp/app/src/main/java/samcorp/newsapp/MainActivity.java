@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (i) {
                     case 0:
                         Cursor cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
-                                NewsDBHelper.COLUMN_CATEGORY + "=?", new String[]{"U.S.", "US news"}, null);
+                                NewsDBHelper.COLUMN_CATEGORY + "=?", new String[]{"U.S."}, null);
                         MyCursorAdapter cursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
                         Log.d("GAT", String.valueOf(cursor.getCount()));
                         mRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 6:
                         cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
-                                NewsDBHelper.COLUMN_CATEGORY + "=?", new String[]{"Movies", "Film"}, null);
+                                NewsDBHelper.COLUMN_CATEGORY + "=?", new String[]{"Movies"}, null);
                         cursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
                         Log.d("GAT", String.valueOf(cursor.getCount()));
                         mRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
