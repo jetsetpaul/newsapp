@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         mRecycler.setLayoutManager(layoutManager);
         mDrawerList = (ListView)findViewById(R.id.navList);
         addDrawerItems();
+
         mResolver = getContentResolver();
         dbHelper = new NewsDBHelper(MainActivity.this, null, null, 1);
 
@@ -60,11 +61,10 @@ public class MainActivity extends AppCompatActivity {
         mAccount = createSyncAccount(MainActivity.this);
 
         ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
-        ContentResolver.addPeriodicSync(mAccount, AUTHORITY, Bundle.EMPTY, 10800);
+        ContentResolver.addPeriodicSync(mAccount, AUTHORITY, Bundle.EMPTY, 2000000000);
 
         Cursor cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
                 null, null, null);
-        cursor.moveToFirst();
         mCursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
         mRecycler.setAdapter(mCursorAdapter);
 
@@ -77,46 +77,62 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i){
+                switch (i) {
                     case 0:
                         Cursor cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
-                                NewsDBHelper.COLUMN_CATEGORY+ "=?", new String[]{"Politics"}, null);
+                                NewsDBHelper.COLUMN_CATEGORY + "=?", new String[]{"U.S.", "US news"}, null);
                         MyCursorAdapter cursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
                         Log.d("GAT", String.valueOf(cursor.getCount()));
-                        cursorAdapter.notifyDataSetChanged();
-                        cursor.moveToPosition(i);
                         mRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                         mRecycler.setAdapter(cursorAdapter);
                         break;
                     case 1:
-                        new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_WORLD);
-                        layoutManager = new LinearLayoutManager(MainActivity.this);
-                        mRecycler.setLayoutManager(layoutManager);
+                        cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
+                                NewsDBHelper.COLUMN_CATEGORY + "=?", new String[]{"World"}, null);
+                        cursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
+                        Log.d("GAT", String.valueOf(cursor.getCount()));
+                        mRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        mRecycler.setAdapter(cursorAdapter);
                         break;
                     case 2:
-                        new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_OPINION);
-                        layoutManager = new LinearLayoutManager(MainActivity.this);
-                        mRecycler.setLayoutManager(layoutManager);
+                        cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
+                                NewsDBHelper.COLUMN_CATEGORY + "=?", new String[]{"Opinion"}, null);
+                        cursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
+                        Log.d("GAT", String.valueOf(cursor.getCount()));
+                        mRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        mRecycler.setAdapter(cursorAdapter);
                         break;
                     case 3:
-                        new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_POLITICS);
-                        layoutManager = new LinearLayoutManager(MainActivity.this);
-                        mRecycler.setLayoutManager(layoutManager);
+                        cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
+                                NewsDBHelper.COLUMN_CATEGORY + "=?", new String[]{"Travel"}, null);
+                        cursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
+                        Log.d("GAT", String.valueOf(cursor.getCount()));
+                        mRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        mRecycler.setAdapter(cursorAdapter);
                         break;
                     case 4:
-                        new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_SPORTS);
-                        layoutManager = new LinearLayoutManager(MainActivity.this);
-                        mRecycler.setLayoutManager(layoutManager);
+                        cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
+                                NewsDBHelper.COLUMN_CATEGORY + "=?", new String[]{"Sports"}, null);
+                        cursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
+                        Log.d("GAT", String.valueOf(cursor.getCount()));
+                        mRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        mRecycler.setAdapter(cursorAdapter);
                         break;
                     case 5:
-                        new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_TECH);
-                        layoutManager = new LinearLayoutManager(MainActivity.this);
-                        mRecycler.setLayoutManager(layoutManager);
+                        cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
+                                NewsDBHelper.COLUMN_CATEGORY + "=?", new String[]{"Technology"}, null);
+                        cursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
+                        Log.d("GAT", String.valueOf(cursor.getCount()));
+                        mRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        mRecycler.setAdapter(cursorAdapter);
                         break;
                     case 6:
-                        new GuardianNews.DownloadUrlTask(newsListener).execute(Constants.GUARDIAN_CULTURE);
-                        layoutManager = new LinearLayoutManager(MainActivity.this);
-                        mRecycler.setLayoutManager(layoutManager);
+                        cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
+                                NewsDBHelper.COLUMN_CATEGORY + "=?", new String[]{"Movies", "Film"}, null);
+                        cursorAdapter = new MyCursorAdapter(MainActivity.this, cursor);
+                        Log.d("GAT", String.valueOf(cursor.getCount()));
+                        mRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        mRecycler.setAdapter(cursorAdapter);
                         break;
                     default:
                         break;
@@ -125,17 +141,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //TODO: arts returning same as tech
-
     private void addDrawerItems() {
         mCategoryList = new ArrayList<>();
         mCategoryList.add(new NewsCategory("U.S. News", R.drawable.usa));
         mCategoryList.add(new NewsCategory("World News", R.drawable.ic_action_globe));
         mCategoryList.add(new NewsCategory("Opinion", R.drawable.ic_action_monolog));
-        mCategoryList.add(new NewsCategory("Politics", R.drawable.ic_action_monolog));
+        mCategoryList.add(new NewsCategory("Travel", R.drawable.ic_action_monolog));
         mCategoryList.add(new NewsCategory("Sports", R.drawable.football));
         mCategoryList.add(new NewsCategory("Tech", R.drawable.ic_menu_share));
-        mCategoryList.add(new NewsCategory("Arts", R.drawable.ic_color_lens));
+        mCategoryList.add(new NewsCategory("Movies", R.drawable.ic_color_lens));
         listAdapter = new CategoryListAdapter(MainActivity.this, mCategoryList);
         mDrawerList.setAdapter(listAdapter);
     }

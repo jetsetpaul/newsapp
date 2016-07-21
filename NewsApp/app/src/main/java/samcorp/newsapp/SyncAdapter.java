@@ -53,7 +53,175 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         String data = "";
 
         try {
-            URL url = new URL(Constants.GUARDIAN_POLITICS);
+            URL url = new URL(Constants.NYT_US);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+            Log.d("GAT", data);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        contentValues = new ContentValues();
+        list = parseNYT(data);
+        if (list != null) {
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
+        }
+
+        try {
+            URL url = new URL(Constants.NYT_WORLD);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+            Log.d("GAT", data);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        contentValues = new ContentValues();
+        list = parseNYT(data);
+        if (list != null) {
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
+        }
+
+        try {
+            URL url = new URL(Constants.NYT_MOVIES);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+            Log.d("GAT", data);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        contentValues = new ContentValues();
+        list = parseNYT(data);
+        if (list != null) {
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
+        }
+
+        try {
+            URL url = new URL(Constants.NYT_TECH);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+            Log.d("GAT", data);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        contentValues = new ContentValues();
+        list = parseNYT(data);
+        if (list != null) {
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
+        }
+
+        try {
+            URL url = new URL(Constants.NYT_OPINION);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+            Log.d("GAT", data);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        contentValues = new ContentValues();
+        list = parseNYT(data);
+        if (list != null) {
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
+        }
+
+        try {
+            URL url = new URL(Constants.NYT_SPORTS);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+            Log.d("GAT", data);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        contentValues = new ContentValues();
+        list = parseNYT(data);
+        if (list != null) {
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
+        }
+
+        try {
+            URL url = new URL(Constants.NYT_TRAVEL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+            Log.d("GAT", data);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        contentValues = new ContentValues();
+        list = parseNYT(data);
+        if (list != null) {
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
+        }
+
+        try {
+            URL url = new URL(Constants.GUARDIAN_WORLD);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             InputStream inStream = connection.getInputStream();
@@ -78,7 +246,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         try {
-            URL url = new URL(Constants.NYT_US);
+            URL url = new URL(Constants.GUARDIAN_US);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             InputStream inStream = connection.getInputStream();
@@ -89,8 +257,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         contentValues = new ContentValues();
-        list = parseNYT(data);
-        if (list != null) {
+        list = parseGuardian(data);
+
+        if(list != null) {
             for (Story story : list) {
                 contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
                 contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
@@ -100,6 +269,83 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
             }
         }
+
+        try {
+            URL url = new URL(Constants.GUARDIAN_FILM);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+            Log.d("GAT", data);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        contentValues = new ContentValues();
+        list = parseGuardian(data);
+
+        if(list != null) {
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
+        }
+
+        try {
+            URL url = new URL(Constants.GUARDIAN_TRAVEL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+            Log.d("GAT", data);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        contentValues = new ContentValues();
+        list = parseGuardian(data);
+
+        if(list != null) {
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
+        }
+
+        try {
+            URL url = new URL(Constants.GUARDIAN_TECH);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+            Log.d("GAT", data);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        contentValues = new ContentValues();
+        list = parseGuardian(data);
+
+        if(list != null) {
+            for (Story story : list) {
+                contentValues.put(NewsDBHelper.COLUMN_TITLE, story.getTitle());
+                contentValues.put(NewsDBHelper.COLUMN_BLURB, story.getBlurb());
+                contentValues.put(NewsDBHelper.COLUMN_IMAGE, story.getImage());
+                contentValues.put(NewsDBHelper.COLUMN_LINK, story.getLink());
+                contentValues.put(NewsDBHelper.COLUMN_CATEGORY, story.getCategory());
+                mContentResolver.insert(NewsContentProvider.CONTENT_URI, contentValues);
+            }
+        }
+
+
 
 
 
