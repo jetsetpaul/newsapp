@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 new MyContentObserver(new Handler(), mCursorAdapter, MainActivity.this));
 
 
+
+
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
