@@ -37,19 +37,22 @@ public class NewsContentProvider extends ContentProvider {
                         String selection,
                         String[] selectionArgs,
                         String sortOrder){
-            int uriType = sURIMatcher.match(uri);
-            Cursor cursor = null;
+        int uriType = sURIMatcher.match(uri);
+        Cursor cursor = null;
 
-            switch (uriType) {
-                case ARTICLES:
+        switch (uriType) {
+            case ARTICLES:
+                if (selection == null){
                     cursor = myDB.getAllArticles();
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown URI");
-            }
+                } else {
+                    cursor = myDB.getArticle(selection, selectionArgs);
+                } break;
+            default:
+                throw new IllegalArgumentException("Unknown URI");
+        }
 
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
-            return cursor;
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return cursor;
     }
 
     @Nullable

@@ -19,6 +19,8 @@ public class NewsDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LINK = "link";
     public static final String COLUMN_BLURB = "blurb";
     public static final String COLUMN_IMAGE = "image";
+    public static final String COLUMN_CATEGORY = "category";
+    public static final String[] projection = {COLUMN_ID, COLUMN_TITLE, COLUMN_LINK, COLUMN_BLURB, COLUMN_IMAGE, COLUMN_CATEGORY};
 
     public NewsDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -29,7 +31,7 @@ public class NewsDBHelper extends SQLiteOpenHelper {
         String CREATE_ARTICLES_TABLE = "CREATE TABLE " +
                 TABLE_ARTICLES + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_TITLE
-                + " TEXT," + COLUMN_LINK + " TEXT," + COLUMN_BLURB
+                + " TEXT," + COLUMN_LINK + " TEXT," + COLUMN_BLURB + " TEXT," + COLUMN_CATEGORY
                 + " TEXT," + COLUMN_IMAGE + " INTEGER)";
         db.execSQL(CREATE_ARTICLES_TABLE);
 
@@ -47,7 +49,7 @@ public class NewsDBHelper extends SQLiteOpenHelper {
         return insertedRow;
     }
     public Cursor getAllArticles() {
-        String[] projection = {COLUMN_ID, COLUMN_TITLE, COLUMN_LINK, COLUMN_BLURB, COLUMN_IMAGE};
+        String[] projection = {COLUMN_ID, COLUMN_TITLE, COLUMN_LINK, COLUMN_BLURB, COLUMN_IMAGE, COLUMN_CATEGORY};
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_ARTICLES,projection,null,null,null,null,null);
@@ -58,5 +60,12 @@ public class NewsDBHelper extends SQLiteOpenHelper {
 
         int rowsDeleted = db.delete(TABLE_ARTICLES,null,null);
         return rowsDeleted;
+    }
+    public Cursor getArticle(String selection, String[] args){
+        String[] projection = {COLUMN_ID, COLUMN_TITLE, COLUMN_LINK, COLUMN_BLURB, COLUMN_IMAGE, COLUMN_CATEGORY};
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_ARTICLES, projection, selection, args, null, null, null);
+        return cursor;
     }
 }
