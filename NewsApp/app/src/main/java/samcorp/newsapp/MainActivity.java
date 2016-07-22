@@ -8,11 +8,11 @@ import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     ContentResolver mResolver;
     Account mAccount;
     NewsDBHelper dbHelper;
-    SharedPreferences sharedPreferences;
+
 
 
     @Override
@@ -193,7 +193,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void scheduleNotification() {
-        Notification notification = getNotification("content");
+        Notification notification = getNotification("New Stories in " + PreferenceManager.getDefaultSharedPreferences
+                (MainActivity.this).getString("followed", "default"));
         Intent notificationIntent = new Intent(this, NotificationPublisher.class);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         long futureInMillis = SystemClock.elapsedRealtime() + 30000;
         //set actionIntent, pending intent
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, alarmManager.INTERVAL_HALF_DAY, pendingIntent);
     }
 
     private Notification getNotification(String content) {

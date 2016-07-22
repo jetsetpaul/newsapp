@@ -3,6 +3,7 @@ package samcorp.newsapp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +22,7 @@ public class ArrayHelper {
     public ArrayHelper(Context context) {
         this.context = context;
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Log.d("PREFS", prefs.getString("followed", "default"));
         editor = prefs.edit();
     }
 
