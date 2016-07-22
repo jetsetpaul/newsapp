@@ -69,6 +69,7 @@ public class CategoryListAdapter extends BaseAdapter {
                     followedCategories.remove(mCategoryList.get(i).getName());
                 }
                 arrayHelper.saveArray("followed", followedCategories);
+
             }
         });
 

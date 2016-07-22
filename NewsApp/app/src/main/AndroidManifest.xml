@@ -41,6 +41,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".DetailActivity" />
+        <receiver android:name=".NotificationPublisher" />
         <service
             android:name="samcorp.newsapp.MySyncService">
             <intent-filter>
