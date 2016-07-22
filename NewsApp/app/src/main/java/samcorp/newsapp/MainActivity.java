@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         mAccount = createSyncAccount(MainActivity.this);
 
         ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
-        ContentResolver.addPeriodicSync(mAccount, AUTHORITY, Bundle.EMPTY, 5400);
+        ContentResolver.addPeriodicSync(mAccount, AUTHORITY, Bundle.EMPTY, 500);
 
         Cursor cursor = mResolver.query(NewsContentProvider.CONTENT_URI, NewsDBHelper.projection,
                 null, null, null);

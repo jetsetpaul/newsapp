@@ -99,6 +99,7 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
+            cursor.moveToPosition(getAdapterPosition());
             Intent i = new Intent(Intent.ACTION_VIEW,
                     Uri.parse(cursor.getString(cursor.getColumnIndex(NewsDBHelper.COLUMN_LINK))));
             context.startActivity(i);
