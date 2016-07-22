@@ -49,6 +49,7 @@ public class MyCursorAdapter extends RecyclerView.Adapter<MyCursorAdapter.ViewHo
         holder.mBlurb.setText(cursor.getString(cursor.getColumnIndex(NewsDBHelper.COLUMN_BLURB)));
         Picasso.with(context)
                 .load(cursor.getString(cursor.getColumnIndex(NewsDBHelper.COLUMN_IMAGE)))
+                .placeholder(R.mipmap.ic_placeholder)
                 .resize(1000, 650)
                 .centerInside()
                 .into(holder.mImage);
