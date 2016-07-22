@@ -24,24 +24,24 @@ public class Constants {
             "http://content.guardianapis.com/search?order-by=newest&section=technology&limit=5&format=json&show-fields=thumbnail%2CtrailText&api-key=1caa0efc-fb6b-4b50-a2d9-20aa44d13a81";
 
     public static final String NYT_US =
-            "https://api.nytimes.com/svc/topstories/v2/national.json?limit=5&api-key=1ffca1308e9f426ba9262ea306c4f77f";
+            "https://api.nytimes.com/svc/topstories/v2/national.json?limit=5&api-key=7ee973aaf5ba44d392b221269981c34b";
 
     public static final String NYT_WORLD =
-            "https://api.nytimes.com/svc/topstories/v2/world.json?limit=5&api-key=1ffca1308e9f426ba9262ea306c4f77f";
+            "https://api.nytimes.com/svc/topstories/v2/world.json?limit=5&api-key=7ee973aaf5ba44d392b221269981c34b";
 
     public static final String NYT_SPORTS =
-            "https://api.nytimes.com/svc/topstories/v2/sports.json?page=0&api-key=1ffca1308e9f426ba9262ea306c4f77f";
+            "https://api.nytimes.com/svc/topstories/v2/sports.json?page=0&api-key=7ee973aaf5ba44d392b221269981c34b";
 
     public static final String NYT_OPINION =
-            "https://api.nytimes.com/svc/topstories/v2/opinion.json?page=0&api-key=1ffca1308e9f426ba9262ea306c4f77f";
+            "https://api.nytimes.com/svc/topstories/v2/opinion.json?page=0&api-key=7ee973aaf5ba44d392b221269981c34b";
 
     public static final String NYT_TECH =
-            "https://api.nytimes.com/svc/topstories/v2/technology.json?page=0&api-key=1ffca1308e9f426ba9262ea306c4f77f";
+            "https://api.nytimes.com/svc/topstories/v2/technology.json?page=0&api-key=7ee973aaf5ba44d392b221269981c34b";
 
     public static final String NYT_MOVIES =
-            "https://api.nytimes.com/svc/topstories/v2/movies.json?page=0&api-key=1ffca1308e9f426ba9262ea306c4f77f";
+            "https://api.nytimes.com/svc/topstories/v2/movies.json?page=0&api-key=7ee973aaf5ba44d392b221269981c34b";
 
     public static final String NYT_TRAVEL =
-            "https://api.nytimes.com/svc/topstories/v2/travel.json?page=0&api-key=1ffca1308e9f426ba9262ea306c4f77f";
+            "https://api.nytimes.com/svc/topstories/v2/travel.json?page=0&api-key=7ee973aaf5ba44d392b221269981c34b";
 
 }
