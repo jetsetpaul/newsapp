@@ -9,11 +9,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:id="@+id/drawer_list_image"/>
+        android:id="@+id/drawer_list_image"
+        android:layout_centerVertical="true"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +32,8 @@
         android:layout_marginLeft="20dp"
         android:id="@+id/checkbox"
         android:clickable="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 

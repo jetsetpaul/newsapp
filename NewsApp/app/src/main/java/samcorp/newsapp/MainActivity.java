@@ -147,13 +147,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDrawerItems() {
         mCategoryList = new ArrayList<>();
-        mCategoryList.add(new NewsCategory("U.S. News", R.drawable.usa));
-        mCategoryList.add(new NewsCategory("World News", R.drawable.ic_action_globe));
-        mCategoryList.add(new NewsCategory("Opinion", R.drawable.ic_action_monolog));
-        mCategoryList.add(new NewsCategory("Travel", R.drawable.ic_action_monolog));
-        mCategoryList.add(new NewsCategory("Sports", R.drawable.football));
-        mCategoryList.add(new NewsCategory("Tech", R.drawable.ic_menu_share));
-        mCategoryList.add(new NewsCategory("Movies", R.drawable.ic_color_lens));
+        mCategoryList.add(new NewsCategory("U.S. News", R.mipmap.ic_newspaper));
+        mCategoryList.add(new NewsCategory("World News", R.mipmap.ic_earth));
+        mCategoryList.add(new NewsCategory("Opinion", R.drawable.ic_feedback));
+        mCategoryList.add(new NewsCategory("Travel", R.mipmap.ic_travel));
+        mCategoryList.add(new NewsCategory("Sports", R.mipmap.ic_soccer));
+        mCategoryList.add(new NewsCategory("Tech", R.mipmap.ic_tech));
+        mCategoryList.add(new NewsCategory("Movies", R.mipmap.ic_film));
         listAdapter = new CategoryListAdapter(MainActivity.this, mCategoryList);
         mDrawerList.setAdapter(listAdapter);
     }
