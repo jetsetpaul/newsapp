@@ -21,6 +21,9 @@ public class ApplicationTest{
     @Test
     public void TestDrawer() throws Exception{
 
+        onView(withId(R.id.recycler)).check(matches(isDisplayed()));
+
+
     }
     @Test
     public void storeFrontDisplays(){
