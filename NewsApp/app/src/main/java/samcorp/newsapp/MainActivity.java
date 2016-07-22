@@ -31,18 +31,15 @@ public class MainActivity extends AppCompatActivity {
     public static final String AUTHORITY = "samcorp.newsapp.NewsContentProvider";
     public static final String ACCOUNT_TYPE = "example.com";
     public static final String ACCOUNT = "default_account";
-    public static final String PREFS_NAME = "USER_PREFS";
 
 
     RecyclerView mRecycler;
     LinearLayoutManager layoutManager;
-    MyAdapter mAdapter;
     News mNewsList;
     ListView mDrawerList;
     MyCursorAdapter mCursorAdapter;
     CategoryListAdapter listAdapter;
     List<NewsCategory> mCategoryList;
-    GuardianNews.NewsListener newsListener;
     ContentResolver mResolver;
     Account mAccount;
     NewsDBHelper dbHelper;

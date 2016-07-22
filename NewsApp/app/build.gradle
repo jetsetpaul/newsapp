@@ -5,6 +5,7 @@ android {
     buildToolsVersion "24.0.0"
 
     defaultConfig {
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         applicationId "samcorp.newsapp"
         minSdkVersion 19
         targetSdkVersion 24
